@@ -13,7 +13,7 @@ export const verifyAccessToken = (req, res, next) => {
     } else {
       
       const flag = Jwt.verify(
-        req.cookies.req_access_token,
+        req.cookies.vms_access_token,
         process.env.ACCESS_TOKEN,(err,payload)=>{
             if(err) next(createError(400,'Unauthorize'))
             req.info = payload

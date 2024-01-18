@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 
 const announcementSchema = new mongoose.Schema({
-    vendor_name: String,
+    created_client: String,
+    created_vendor:String,
     vendor_note: String,
     client_note: String,
     date: {type:Date, default:Date.now()}

@@ -13,7 +13,8 @@ import taskRoute from './routes/task.js'
 import toDoListRoute from './routes/todolist.js'
 import announcementRoute from './routes/announcement.js'
 import vendorinvoiceRoute from './routes/vendorinvoice.js'
-
+import vendormanningRoute from './routes/vendormanning.js'
+import contractdetailsRoute from './routes/contractdetails.js'
 const port = process.env.PORT || 8888;
 
 // app.use(cors());
@@ -33,6 +34,7 @@ app.get('/api/test',(req,res,next)=>{
   res.send('<h1>Welcome To Nodejs</h1>')
 })
 app.use("/api/profile_photos", express.static("profile_photos"));
+app.use("/api/task_files/",express.static("task_files"))
 
 app.use('/api/auth',authRoute)
 app.use('/api/vendor',vendorRoute)
@@ -41,6 +43,8 @@ app.use('/api/task',taskRoute)
 app.use('/api/todolist',toDoListRoute)
 app.use('/api/announcement',announcementRoute)
 app.use('/api/invoice',vendorinvoiceRoute)
+app.use('/api/manning',vendormanningRoute)
+app.use('/api/contract',contractdetailsRoute)
 
 
 app.use((err, req, res, next) => {

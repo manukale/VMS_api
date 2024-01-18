@@ -33,12 +33,12 @@ export const login = async (req, res, next) => {
     const result = bcrypt.compareSync(req.body.password.trim(), User.password.trim());
     if (result === false) return res.status(200).json({ msg: 'Invalid Credential' })
     const token = jwt.sign(
-      { id: User._id },
-      process.env.ACCESS_TOKEN
-    );
-    const { password, ...restOfDetails } = User._doc;
+  { id: User._id },
+  process.env.ACCESS_TOKEN
+  );
+  const { password, ...restOfDetails } = User._doc;
     res
-      .cookie("access_token", token,)
+      .cookie("vms_access_token", token,)
       .status(200)
       .json({ msg: "Login Successfully", details: restOfDetails });
   } catch (error) {
@@ -113,7 +113,15 @@ export const register = async (req, res, next) => {
 }
 export const getUsers = async(req,res,next) =>{
   try {
-      const result = await users.find()
+      const result = await users.find().populate('vendor')
+      res.status(200).json(result)
+  } catch (error) {
+      
+  }
+}
+export const getUsersByVendor = async(req,res,next) =>{
+  try {
+      const result = await users.find({vendor:req.params.id}).populate('vendor')
       res.status(200).json(result)
   } catch (error) {
       
@@ -128,11 +136,22 @@ export const getUserById = async(req,res,next) =>{
     
   }
 }
+export const deleteUser = async(req,res,next) =>{
+  try {
+    const result = await users.findByIdAndDelete({_id : req.params.id},req.body)
+    res.status(200).json({msg:'User Deleted Successfully'})
+  } catch (error) {
+    
+  }
+}
 
 export const updateUser = async(req,res,next) => {
   try {
+    console.log(req.body);
+    console.log(req.params.id);
     const result = await users.findByIdAndUpdate({_id:req.params.id},req.body,{new:true})
-    res.status(200).json({msg:'Information Updated Successfully...'})
+    res.status(200).json(result)
+    console.log('***::',result);
   } catch (error) {
     
   }
@@ -165,15 +184,26 @@ export const verifyPassword = async (req, res, next) => {
   }
 };
 
+export const resetPassword = async(req,res,next)=>{
+  try {
+    console.log('auth::',req.body);
+    const password = bcrypt.hashSync('Admin@123', 10);
+    const result = await users.findOneAndUpdate({_id:req.params.id},{$set : {password:password}})
+    res.status(200).json({msg:'Password Updated Successfully...'})
+  } catch (error) {
+    next(error)
+  }
+}
+
 export const userInfoChange = async (req, res, next) => {
   try {
-    console.log("***",req.body)
     if (req.body.password) {
       req.body.password = bcrypt.hashSync(req.body.password, 10);
     }
     const updated = await users.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     });
+    console.log('updated::',updated);
 
     res.status(200).json({ msg: "Successfully Updated", updated: updated });
   } catch (error) {

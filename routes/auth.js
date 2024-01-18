@@ -1,5 +1,5 @@
 import express from 'express'
-import { getUsers, login, register,getUserById, updateUser, uploadProfilePhoto, verifyPassword, userInfoChange } from '../controller/auth.js';
+import { getUsers, login, register,getUserById, updateUser, uploadProfilePhoto, verifyPassword, userInfoChange, getUsersByVendor, resetPassword, deleteUser } from '../controller/auth.js';
 import multer from 'multer';
 
 const router =express.Router();
@@ -30,9 +30,12 @@ const profilePhotoUploader = multer({
 router.post('/login',login)
 router.post('/register',register)
 router.get('/getUsers',getUsers)
+router.get('/getUsersByVendor/:id',getUsersByVendor)
 router.put('/updateUser/:id',updateUser)
+router.delete('/deleteUser/:id',deleteUser)
 router.get('/getUserById/:id',getUserById)
 router.post("/verifyPassword/:email",verifyPassword);
+router.put("/resetPassword/:id",resetPassword);
 router.post('/userInfoChange/:id',userInfoChange)
 
 router.post("/uploadProfilePhoto",profilePhotoUploader,uploadProfilePhoto);
