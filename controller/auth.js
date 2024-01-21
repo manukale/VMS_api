@@ -156,6 +156,17 @@ export const updateUser = async(req,res,next) => {
     
   }
 }
+export const updateAccessRights = async(req,res,next) => {
+  try {
+    console.log(req.body);
+    console.log(req.params.id);
+    const result = await users.findOneAndUpdate({_id:req.params.id},{$set:{access_right:req.body}},{new:true})
+    res.status(200).json(result)
+    console.log('***::',result);
+  } catch (error) {
+    
+  }
+}
 
 export const uploadProfilePhoto = async (req, res, next) => {
   try {

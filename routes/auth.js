@@ -1,5 +1,5 @@
 import express from 'express'
-import { getUsers, login, register,getUserById, updateUser, uploadProfilePhoto, verifyPassword, userInfoChange, getUsersByVendor, resetPassword, deleteUser } from '../controller/auth.js';
+import { getUsers, login, register,getUserById, updateUser, uploadProfilePhoto, verifyPassword, userInfoChange, getUsersByVendor, resetPassword, deleteUser, updateAccessRights } from '../controller/auth.js';
 import multer from 'multer';
 
 const router =express.Router();
@@ -37,6 +37,7 @@ router.get('/getUserById/:id',getUserById)
 router.post("/verifyPassword/:email",verifyPassword);
 router.put("/resetPassword/:id",resetPassword);
 router.post('/userInfoChange/:id',userInfoChange)
+router.post('/updateAccessRights/:id',updateAccessRights)
 
 router.post("/uploadProfilePhoto",profilePhotoUploader,uploadProfilePhoto);
 // router.post('/signin',signin)
