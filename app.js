@@ -15,6 +15,9 @@ import announcementRoute from './routes/announcement.js'
 import vendorinvoiceRoute from './routes/vendorinvoice.js'
 import vendormanningRoute from './routes/vendormanning.js'
 import contractdetailsRoute from './routes/contractdetails.js'
+import complainRoute from './routes/complain.js'
+import feedbackRoute from './routes/feedback.js'
+import feedbackdataRoute from './routes/feedbackdata.js'
 const port = process.env.PORT || 8888;
 
 // app.use(cors());
@@ -35,6 +38,7 @@ app.get('/api/test',(req,res,next)=>{
 })
 app.use("/api/profile_photos", express.static("profile_photos"));
 app.use("/api/task_files/",express.static("task_files"))
+app.use("/api/documents/",express.static("documents"))
 
 app.use('/api/auth',authRoute)
 app.use('/api/vendor',vendorRoute)
@@ -45,7 +49,9 @@ app.use('/api/announcement',announcementRoute)
 app.use('/api/invoice',vendorinvoiceRoute)
 app.use('/api/manning',vendormanningRoute)
 app.use('/api/contract',contractdetailsRoute)
-
+app.use('/api/complain',complainRoute)
+app.use('/api/feedback',feedbackRoute)
+app.use('/api/feedbackdata',feedbackdataRoute)
 
 app.use((err, req, res, next) => {
   res.status(err.status || 500).json({

@@ -26,6 +26,7 @@ export const signin = async (req, res, next) => {
 
 export const login = async (req, res, next) => {
   try {
+    
     const User = await users.findOne({ email: req.body.email }).populate('vendor');
     if (!User) {
       return res.status(200).json({ msg: 'Invalid Credential' })
@@ -147,22 +148,20 @@ export const deleteUser = async(req,res,next) =>{
 
 export const updateUser = async(req,res,next) => {
   try {
-    console.log(req.body);
-    console.log(req.params.id);
+    
     const result = await users.findByIdAndUpdate({_id:req.params.id},req.body,{new:true})
     res.status(200).json(result)
-    console.log('***::',result);
+   
   } catch (error) {
     
   }
 }
 export const updateAccessRights = async(req,res,next) => {
   try {
-    console.log(req.body);
-    console.log(req.params.id);
+   
     const result = await users.findOneAndUpdate({_id:req.params.id},{$set:{access_right:req.body}},{new:true})
     res.status(200).json(result)
-    console.log('***::',result);
+   
   } catch (error) {
     
   }
@@ -197,7 +196,7 @@ export const verifyPassword = async (req, res, next) => {
 
 export const resetPassword = async(req,res,next)=>{
   try {
-    console.log('auth::',req.body);
+    
     const password = bcrypt.hashSync('Admin@123', 10);
     const result = await users.findOneAndUpdate({_id:req.params.id},{$set : {password:password}})
     res.status(200).json({msg:'Password Updated Successfully...'})
@@ -214,7 +213,7 @@ export const userInfoChange = async (req, res, next) => {
     const updated = await users.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     });
-    console.log('updated::',updated);
+  
 
     res.status(200).json({ msg: "Successfully Updated", updated: updated });
   } catch (error) {

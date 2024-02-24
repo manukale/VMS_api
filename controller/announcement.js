@@ -39,3 +39,11 @@ export const getAnnouncementByDate = async (req,res,next)=>{
         
     }
 }
+export const getAnnouncementDateRange = async (req,res,next)=>{
+    try {
+        const result = await announcement.find({date:{$gte:new Date(req.params.fromDate),$lte:new Date(req.params.toDate)}}).sort({created:'asc'})
+            res.status(200).json(result)
+    } catch (error) {
+        next(error)   
+    }
+}

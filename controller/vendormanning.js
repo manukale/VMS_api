@@ -18,7 +18,7 @@ export const getManning = async (req, res, next) => {
 }
 export const updateManning = async (req, res, next) => {
     try {
-        console.log('****');
+       
         const result = await manning.findByIdAndUpdate({_id:req.params.id},req.body,{new:true})
         res.status(200).json({msg:"Manning Updated successfully..."})
     } catch (error) {

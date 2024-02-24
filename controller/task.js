@@ -19,7 +19,7 @@ export const getTask = async(req,res,next) =>{
         next(error)
     }
 }
-export const   getTaskCountByVendorName = async(req,res,next) =>{
+export const getTaskCountByVendorName = async(req,res,next) =>{
     try {
         const result = await task.find({vendor_name: req.params.name})
         res.status(200).json(result.length)
@@ -76,7 +76,7 @@ export const deleteTask = async(req,res,next) =>{
 
 export const addTaskFile = async(req,res,next)=>{
     try {
-        console.log(req.body.filename);
+       
         req.body.file = '/task_files/'+req.file.filename
         
         const result = await task.findByIdAndUpdate({_id:req.body.id},{file:req.body.file})

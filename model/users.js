@@ -20,6 +20,9 @@ const userSchema =new mongoose.Schema({
         vendor_manning    :{type:Boolean, default:false},
         announcement    :{type:Boolean, default:false},
         vendor_contract    :{type:Boolean, default:false},
+        announcement_report    :{type:Boolean, default:false},
+        complaint_report    :{type:Boolean, default:false},
+        invoice_report    :{type:Boolean, default:false},
     }
     
 })

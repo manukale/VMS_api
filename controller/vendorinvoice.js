@@ -18,6 +18,15 @@ export const getInvoice = async (req, res, next) => {
         next(error)   
     }
 }
+export const getInvoiceRange = async (req, res, next) => {
+    try {
+       
+        const result = await invoice.find({dateofpay:{$gte:new Date(req.params.fromDate),$lte:new Date(req.params.toDate)}}).sort({date:'asc'})
+            res.status(200).json(result)
+    } catch (error) {
+        next(error)   
+    }
+}
 
 export const getMonthCount = async(req,res,next) =>{
     try {
